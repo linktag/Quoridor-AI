@@ -38,29 +38,29 @@ class Plateau:
     #CONSTRUCTEUR
     def __init__(self):
         #On creer les joueurs et leurs coordonnées
-        self.c_joueurs = [[4,8],[4,0]]
+        self.c_joueurs = [[4,8],[4,0]];
 
         #Leur barrières
-        self.nbBarriere = [10,10]
+        self.nbBarriere = [10,10];
 
         #Creation du tableau contenant les barrières verticales et les barrières horizontales
         #On creer aussi les tableau contenant les barrières interdites
-        self.barrieresHorizontales = []
-        self.barrieresHorizontalesInterdites = []
-        self.barrieresVerticales = []
-        self.barrieresVerticalesInterdites = []
+        self.barrieresHorizontales = [];
+        self.barrieresHorizontalesInterdites = [];
+        self.barrieresVerticales = [];
+        self.barrieresVerticalesInterdites = [];
         for k in range(8):
-            self.barrieresVerticales.append([0]*8)
-            self.barrieresVerticalesInterdites.append([0]*8)
-            self.barrieresHorizontales.append([0]*8)
-            self.barrieresHorizontalesInterdites.append([0]*8)
+            self.barrieresVerticales.append([0]*8);
+            self.barrieresVerticalesInterdites.append([0]*8);
+            self.barrieresHorizontales.append([0]*8);
+            self.barrieresHorizontalesInterdites.append([0]*8);
 
 
     #METHODES
 
     #Methode renvoyant les coordonées du joueur demandé
     def CoordonneeJoueur(self, numeroJoueur):
-        return self.c_joueurs[numeroJoueur-1]
+        return self.c_joueurs[numeroJoueur-1];
 
 
 class Joueur:
@@ -73,36 +73,36 @@ class Joueur:
 
     #Constructeur
     def __init__ (self, numero):
-        self.numero = numero
+        self.numero = numero;
 
     #Methodes
     #Fonction Jouer qui fait jouer un joueur
     def Jouer(self, fenetre, canvas, proportion, plateau):
         while True:
             #On le fait cliquer, et pour cela on declenche la boucle pour attendre l'interaction
-            canvas.bind('<Button-1>', lambda event, arg=fenetre: self.Clique(event, arg))
-            fenetre.mainloop()
+            canvas.bind('<Button-1>', lambda event, arg=fenetre: self.Clique(event, arg));
+            fenetre.mainloop();
 
             #On unbin
-            canvas.unbind('<Button-1>')
+            canvas.unbind('<Button-1>');
         
             #On interprete l'emplacement du clique
             #On détecte si le clique est sur une case ou sur un vide pour mettre une barrière
 
             #On creer le nouveau coup
-            newPlateau = deepcopy(plateau) #On effectue un deepcopy pour ne pas juste copier la reference et vraimetn creer un nouveau coup
+            newPlateau = deepcopy(plateau); #On effectue un deepcopy pour ne pas juste copier la reference et vraimetn creer un nouveau coup
 
             cliquerSurUneCase = False;
             for i in range(9):
                 for j in range(9):
                     if (i*100+15 <= self.x and self.x <= (i+1)*100-15 and j*100+15 <= self.y and self.y <= (j+1)*100-15):
-                        cliquerSurUneCase = True
+                        cliquerSurUneCase = True;
          
             #Si on a cliqué sur une case, on envoie le coup
             if cliquerSurUneCase:
-                newPlateau.c_joueurs[self.numero-1] = [floor(self.x/100), floor(self.y/100)]
-                coup = Coup(plateau, newPlateau, 1)
-                return coup #On renvoie le coup joué
+                newPlateau.c_joueurs[self.numero-1] = [floor(self.x/100), floor(self.y/100)];
+                coup = Coup(plateau, newPlateau, 1);
+                return coup; #On renvoie le coup joué
 
             #Si on a cliqué pas sur une case -> On a du cliquer sur une barrière
             #On va detecter de quelle barrière il sagit
@@ -110,8 +110,8 @@ class Joueur:
                 #On vérifie que la bordure ne se trouve pas hors map
                 pasDerreur = True
                 if (self.x<=15 or self.x>=885 or self.y<=15 or self.y>=885):
-                    print("Bordure en dehors du plateau de jeu !")
-                    pasDerreur = False
+                    print("Bordure en dehors du plateau de jeu !");
+                    pasDerreur = False;
 
 
                 #On vérifie que la bordure ne soit pas indecise
@@ -119,8 +119,8 @@ class Joueur:
                     for i in range(9):
                         for j in range(9):
                             if (i*100-15 <= self.x and self.x <= i*100+15 and j*100-15 <= self.y and self.y <= j*100+15):
-                                print("Imprecision : 2 barrières possibles -> Impossible de choisir")
-                                pasDerreur = False
+                                print("Imprecision : 2 barrières possibles -> Impossible de choisir");
+                                pasDerreur = False;
 
                 #Si aucune erreur n'a été détecté avant, le coup est correct et on peut l'envoyer
                 if pasDerreur:
@@ -130,23 +130,23 @@ class Joueur:
                             #Si le clique est sur une barrière verticale :
                             if (i*100-15 <= self.x and self.x <= i*100+15 and 100*j <= self.y and self.y <= 100*(j+1)):
                                 #Ses coordonnées sont donc i et j : on creer un nouveau coup avec ca
-                                newPlateau.barrieresVerticales[i][j] = 1
-                                coup = Coup(plateau, newPlateau, 2)
+                                newPlateau.barrieresVerticales[i][j] = 1;
+                                coup = Coup(plateau, newPlateau, 2);
                                 return coup;
 
                             #SI le clique est sur une barrière horizontale
                             if (j*100-15 <= self.y and self.y <= j*100+15 and 100*i <= self.x and self.x <= 100*(i+1)):
                                 #Ses coordonnées sont donc i et j : on creer un nouveau coup avec ca
-                                newPlateau.barrieresHorizontales[i][j] = 1
-                                coup = Coup(plateau, newPlateau, 2)
+                                newPlateau.barrieresHorizontales[i][j] = 1;
+                                coup = Coup(plateau, newPlateau, 2);
                                 return coup;
                                
 
     #Fonction appeller quand un clique est detecté
     def Clique(self, event, fenetre):
-        self.x = event.x
-        self.y = event.y
-        fenetre.quit()
+        self.x = event.x;
+        self.y = event.y;
+        fenetre.quit();
            
 
 class Coup:
@@ -160,15 +160,15 @@ class Coup:
     #CONSTRUCTEUR
     def __init__(self, ancienPlateau, nouveauPlateau, typeDeCoup):
         #Ancien plateau et nouveau plateau sont enregistrés
-        self.ancienPlateau = ancienPlateau
-        self.nouveauPlateau = nouveauPlateau
-        self.typeDeCoup = typeDeCoup
+        self.ancienPlateau = ancienPlateau;
+        self.nouveauPlateau = nouveauPlateau;
+        self.typeDeCoup = typeDeCoup;
 
     #Methodes
 
     #Methode envoyant le nouveau plateau
     def EnvoyerNouveauPlateau(self):
-        return self.nouveauPlateau
+        return self.nouveauPlateau;
 
 class Game:
 
@@ -182,20 +182,20 @@ class Game:
     #CONSTRUCTEUR
     def __init__(self, joueur1, joueur2, proportionFenetre):
         #On sauvegarde les joueurs dans la partie
-        self.joueur = [joueur1, joueur2] 
+        self.joueur = [joueur1, joueur2];
 
         #On créer un plateau de jeu
-        self.plateau = Plateau()
+        self.plateau = Plateau();
 
         #On creer la fenetre
-        self.proportion = proportionFenetre/100
-        self.fenetre = tk.Tk()
-        self.fenetre.wm_title("Quoridor")
-        self.canvas = tk.Canvas(self.fenetre, width =900*self.proportion, height = 900*self.proportion, bg ='#d9d9d9')
-        self.canvas.pack()
+        self.proportion = proportionFenetre/100;
+        self.fenetre = tk.Tk();
+        self.fenetre.wm_title("Quoridor");
+        self.canvas = tk.Canvas(self.fenetre, width =900*self.proportion, height = 900*self.proportion, bg ='#d9d9d9');
+        self.canvas.pack();
 
         #On actualise l'affichage une premiere fois
-        self.ActualiserAffichage()
+        self.ActualiserAffichage();
 
 
 
@@ -207,14 +207,14 @@ class Game:
 
         #Si le joueur 1 se trouve sur une case avec comme coordonnée en x 8, il a gagné
         if (self.plateau.CoordonneeJoueur(1)[1] == 0):
-            return 1
+            return 1;
 
         #De meme pour le joueur 2 : si il se trouve a une coordonnée en x de 0, il a gagné
         if (self.plateau.CoordonneeJoueur(2)[1] == 8):
-            return 2
+            return 2;
 
         #Sinon, perosnne n'a gagné
-        return 0
+        return 0;
 
     
 
@@ -229,19 +229,19 @@ class Game:
             if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] ):
                 #Coup case BAS
                 if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]+1):
-                    return True
+                    return True;
                 #coup case HAUT
                 elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]-1):
-                    return True
+                    return True;
 
             #Coup ou y reste stable 
             if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] ):
                 #Coup case DROIT
                 if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]+1):
-                    return True
+                    return True;
                 #Coup case GAUCHE
                 elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]-1):
-                    return True
+                    return True;
 
         #Si il s'agit d'une barrière
         elif coupATester.typeDeCoup == 2:
@@ -251,20 +251,20 @@ class Game:
                 for i in range(8):
                     for j in range(8):
                         if (coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 1 and coupATester.nouveauPlateau.barrieresHorizontalesInterdites[i][j] == 1):
-                            print("Erreur : Impossible de placer cette barrière")
-                            return False
+                            print("Erreur : Impossible de placer cette barrière");
+                            return False;
                         if (coupATester.nouveauPlateau.barrieresVerticales[i][j] == 1 and coupATester.nouveauPlateau.barrieresVerticalesInterdites[i][j] == 1):
-                            print("Erreur : Impossible de placer cette barrière")
-                            return False
+                            print("Erreur : Impossible de placer cette barrière");
+                            return False;
 
                 #Sinon, on peut jouer la barrière 
                 return True;
 
             else:
-                print("Le joueur " + str(indexJoueurEnCours) + " n'a plus de barrière !")
+                print("Le joueur " + str(indexJoueurEnCours) + " n'a plus de barrière !");
 
 
-        print("Coup interdit")
+        print("Coup interdit");
         return False
 
 
@@ -274,27 +274,27 @@ class Game:
     def ActualiserAffichage(self):
         
         #On efface tout ce qu'il y a:
-        self.canvas.delete("all")
+        self.canvas.delete("all");
 
         #On creer le plateau
         for i in range(9):
             for j in range(9):
-                self.canvas.create_rectangle(self.proportion*100*i+self.proportion*15, self.proportion*100*j+self.proportion*15,self.proportion*100*(i+1)-self.proportion*15, self.proportion*100*(j+1)-self.proportion*15,fill="#621817")
+                self.canvas.create_rectangle(self.proportion*100*i+self.proportion*15, self.proportion*100*j+self.proportion*15,self.proportion*100*(i+1)-self.proportion*15, self.proportion*100*(j+1)-self.proportion*15,fill="#621817");
 
         #On ajoute des cercles pour les joueurs
-        self.canvas.create_oval(self.proportion*100*self.plateau.CoordonneeJoueur(1)[0]+self.proportion*15, self.proportion*100*self.plateau.CoordonneeJoueur(1)[1]+self.proportion*15,self.proportion*100*(self.plateau.CoordonneeJoueur(1)[0]+1)-self.proportion*15, self.proportion*100*(self.plateau.CoordonneeJoueur(1)[1]+1)-self.proportion*15,fill="#ffd849")
-        self.canvas.create_oval(self.proportion*100*self.plateau.CoordonneeJoueur(2)[0]+self.proportion*15, self.proportion*100*self.plateau.CoordonneeJoueur(2)[1]+self.proportion*15,self.proportion*100*(self.plateau.CoordonneeJoueur(2)[0]+1)-self.proportion*15, self.proportion*100*(self.plateau.CoordonneeJoueur(2)[1]+1)-self.proportion*15,fill="#3673a6")
+        self.canvas.create_oval(self.proportion*100*self.plateau.CoordonneeJoueur(1)[0]+self.proportion*15, self.proportion*100*self.plateau.CoordonneeJoueur(1)[1]+self.proportion*15,self.proportion*100*(self.plateau.CoordonneeJoueur(1)[0]+1)-self.proportion*15, self.proportion*100*(self.plateau.CoordonneeJoueur(1)[1]+1)-self.proportion*15,fill="#ffd849");
+        self.canvas.create_oval(self.proportion*100*self.plateau.CoordonneeJoueur(2)[0]+self.proportion*15, self.proportion*100*self.plateau.CoordonneeJoueur(2)[1]+self.proportion*15,self.proportion*100*(self.plateau.CoordonneeJoueur(2)[0]+1)-self.proportion*15, self.proportion*100*(self.plateau.CoordonneeJoueur(2)[1]+1)-self.proportion*15,fill="#3673a6");
 
         #Affichage des barrières
         for i in range(8):
             for j in range(8):
                 if self.plateau.barrieresVerticales[i][j] == 1:
-                    self.canvas.create_rectangle(i*100-15, j*100-7 ,i*100+15, (j+2)*100-7, fill="#f3e2bd")
+                    self.canvas.create_rectangle(i*100-15, j*100-7 ,i*100+15, (j+2)*100-7, fill="#f3e2bd");
                 if self.plateau.barrieresHorizontales[i][j] == 1:
-                    self.canvas.create_rectangle(i*100-7, j*100-15 ,(i+2)*100-7, j*100+15, fill="#f3e2bd")
+                    self.canvas.create_rectangle(i*100-7, j*100-15 ,(i+2)*100-7, j*100+15, fill="#f3e2bd");
 
         #On actualise l'affichage
-        self.canvas.update()
+        self.canvas.update();
 
 
 
@@ -303,20 +303,22 @@ class Game:
     def CommencerPartie(self):
 
         #Variable contenant le tour actuel
-        tour = 1
+        tour = 1;
 
         #Tant que aucun joueur n'a gagnée
         while self.VerifierSiUnJoueurAGagne() == 0:
 
-            coupValide = False
+            print("\nC'est au tour du joueur ", tour);
+
+            coupValide = False;
 
             #Tant que le joueur n'a pas joué un coup autorisee
             while coupValide == False:
                 #On fait jouer le joueur dont c'est le tour de jouer
-                coupDuJoueur = self.joueur[tour-1].Jouer(self.fenetre, self.canvas, self.proportion, self.plateau)
+                coupDuJoueur = self.joueur[tour-1].Jouer(self.fenetre, self.canvas, self.proportion, self.plateau);
 
                 #On vérifie si son coup est valide
-                coupValide = self.VerifierSiCoupValide(coupDuJoueur, tour)
+                coupValide = self.VerifierSiCoupValide(coupDuJoueur, tour);
 
             #La boucle est fini -> Le coup à été validé et peut donc etre jouer
             #On fait donc jouer le coup au plateau
@@ -324,25 +326,26 @@ class Game:
             if (coupDuJoueur.typeDeCoup == 1):
                 print("Le joueur " + str(tour) + " se déplace");
             else:
-                coupDuJoueur.nouveauPlateau.nbBarriere[tour-1] -= 1
+                coupDuJoueur.nouveauPlateau.nbBarriere[tour-1] -= 1;
+                #On appelle la fonction pour trouver les barrières interdites
+                coupDuJoueur.nouveauPlateau = ActualiserBarrieresInterdites(coupDuJoueur.nouveauPlateau);
                 print("Il reste " + str(coupDuJoueur.nouveauPlateau.nbBarriere[tour-1]) + " barrières au joueur " + str(tour));
 
             #On actualise le plateau
-            self.plateau = coupDuJoueur.nouveauPlateau
+            self.plateau = coupDuJoueur.nouveauPlateau;
 
             #On actualise l'affichage
-            self.ActualiserAffichage()
+            self.ActualiserAffichage();
 
             #On change de tour
-            tour = 3 - tour #Technique pour alternr entre 1 et 2 comme valeure pour tour
-            print("\nC'est au tour du joueur ", tour)
+            tour = 3 - tour; #Technique pour alternr entre 1 et 2 comme valeure pour tour
 
         #La boucle est finie -> Un joueur a gagné
         #On regarde qui a gagné :
-        gagnant = self.VerifierSiUnJoueurAGagne()
+        gagnant = self.VerifierSiUnJoueurAGagne();
 
         #On affiche
-        print("Victoire du Joueur " + str(gagnant))
+        print("Victoire du Joueur " + str(gagnant));
 
 
 
