@@ -88,7 +88,6 @@ class Joueur:
         
             #On interprete l'emplacement du clique
             #On détecte si le clique est sur une case ou sur un vide pour mettre une barrière
-            print("Clique au coordonnée ", self.x, self.y)
 
             #On creer le nouveau coup
             newPlateau = deepcopy(plateau) #On effectue un deepcopy pour ne pas juste copier la reference et vraimetn creer un nouveau coup
@@ -120,7 +119,7 @@ class Joueur:
                     for i in range(9):
                         for j in range(9):
                             if (i*100-15 <= self.x and self.x <= i*100+15 and j*100-15 <= self.y and self.y <= j*100+15):
-                                print("Imprecision : 2 bordures possibles -> Impossible de choisir")
+                                print("Imprecision : 2 barrières possibles -> Impossible de choisir")
                                 pasDerreur = False
 
                 #Si aucune erreur n'a été détecté avant, le coup est correct et on peut l'envoyer
@@ -220,29 +219,50 @@ class Game:
     
 
     #Methode ABSTRAITE vérifiant si un coup est autorisée
-    def VerifierSiCoupValide(self, coupATester, joueurEnCours):
+    def VerifierSiCoupValide(self, coupATester, indexJoueurEnCours):
 
         #On verifie si le coup est un coup de deplacement ou non
         if coupATester.typeDeCoup == 1:
             #On vérifie si c'est un des 4 coups autorisés
 
             #Coup ou x reste stable 
-            if (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0] ):
+            if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] ):
                 #Coup case BAS
-                if(coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1]+1):
+                if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]+1):
                     return True
                 #coup case HAUT
-                elif (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1]-1):
+                elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]-1):
                     return True
 
             #Coup ou y reste stable 
-            if (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1] ):
+            if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] ):
                 #Coup case DROIT
-                if(coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0]+1):
+                if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]+1):
                     return True
                 #Coup case GAUCHE
-                elif (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0]-1):
+                elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]-1):
                     return True
+
+        #Si il s'agit d'une barrière
+        elif coupATester.typeDeCoup == 2:
+        #On vérifie si il reste des barrières au joueur
+            if (coupATester.nouveauPlateau.nbBarriere[indexJoueurEnCours-1] != 0):
+                #On vérifie si il n'y a pas déjja une barrière à cette endroit
+                for i in range(8):
+                    for j in range(8):
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 1 and coupATester.nouveauPlateau.barrieresHorizontalesInterdites[i][j] == 1):
+                            print("Erreur : Impossible de placer cette barrière")
+                            return False
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i][j] == 1 and coupATester.nouveauPlateau.barrieresVerticalesInterdites[i][j] == 1):
+                            print("Erreur : Impossible de placer cette barrière")
+                            return False
+
+                #Sinon, on peut jouer la barrière 
+                return True;
+
+            else:
+                print("Le joueur " + str(indexJoueurEnCours) + " n'a plus de barrière !")
+
 
         print("Coup interdit")
         return False
@@ -270,6 +290,8 @@ class Game:
             for j in range(8):
                 if self.plateau.barrieresVerticales[i][j] == 1:
                     self.canvas.create_rectangle(i*100-15, j*100-7 ,i*100+15, (j+2)*100-7, fill="#f3e2bd")
+                if self.plateau.barrieresHorizontales[i][j] == 1:
+                    self.canvas.create_rectangle(i*100-7, j*100-15 ,(i+2)*100-7, j*100+15, fill="#f3e2bd")
 
         #On actualise l'affichage
         self.canvas.update()
@@ -298,6 +320,14 @@ class Game:
 
             #La boucle est fini -> Le coup à été validé et peut donc etre jouer
             #On fait donc jouer le coup au plateau
+            #On décompte la barrière du joueur si il en a posé une
+            if (coupDuJoueur.typeDeCoup == 1):
+                print("Le joueur " + str(tour) + " se déplace");
+            else:
+                coupDuJoueur.nouveauPlateau.nbBarriere[tour-1] -= 1
+                print("Il reste " + str(coupDuJoueur.nouveauPlateau.nbBarriere[tour-1]) + " barrières au joueur " + str(tour));
+
+            #On actualise le plateau
             self.plateau = coupDuJoueur.nouveauPlateau
 
             #On actualise l'affichage
@@ -305,7 +335,7 @@ class Game:
 
             #On change de tour
             tour = 3 - tour #Technique pour alternr entre 1 et 2 comme valeure pour tour
-            print("C'est au tour du joueur ", tour)
+            print("\nC'est au tour du joueur ", tour)
 
         #La boucle est finie -> Un joueur a gagné
         #On regarde qui a gagné :
