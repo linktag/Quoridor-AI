@@ -220,13 +220,31 @@ class Game:
     
 
     #Methode ABSTRAITE vérifiant si un coup est autorisée
-    def VerifierSiCoupValide(self, coupATester):
+    def VerifierSiCoupValide(self, coupATester, joueurEnCours):
 
         #On verifie si le coup est un coup de deplacement ou non
         if coupATester.typeDeCoup == 1:
-            #On vérifie si la variation de case est de 1
-            if (coupATester.ancienPlateau.CoordonneeJoueur(1)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(1)[0]+1):
-                return True
+            #On vérifie si c'est un des 4 coups autorisés
+
+            #Coup ou x reste stable 
+            if (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0] ):
+                #Coup case BAS
+                if(coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1]+1):
+                    return True
+                #coup case HAUT
+                elif (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1]-1):
+                    return True
+
+            #Coup ou y reste stable 
+            if (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[1] ):
+                #Coup case DROIT
+                if(coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0]+1):
+                    return True
+                #Coup case GAUCHE
+                elif (coupATester.ancienPlateau.CoordonneeJoueur(joueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(joueurEnCours)[0]-1):
+                    return True
+
+        print("Coup interdit")
         return False
 
 
@@ -276,8 +294,7 @@ class Game:
                 coupDuJoueur = self.joueur[tour-1].Jouer(self.fenetre, self.canvas, self.proportion, self.plateau)
 
                 #On vérifie si son coup est valide
-                print(self.VerifierSiCoupValide(coupDuJoueur))
-                coupValide = self.VerifierSiCoupValide(coupDuJoueur)
+                coupValide = self.VerifierSiCoupValide(coupDuJoueur, tour)
 
             #La boucle est fini -> Le coup à été validé et peut donc etre jouer
             #On fait donc jouer le coup au plateau
