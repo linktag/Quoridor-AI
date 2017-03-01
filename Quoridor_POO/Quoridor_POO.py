@@ -62,6 +62,12 @@ class Plateau:
     def CoordonneeJoueur(self, numeroJoueur):
         return self.c_joueurs[numeroJoueur-1];
 
+    #Méthode méttant à jour barrieresHorizontalesInterdites et barrieresVerticalesInterdites en fonction du plateau
+    def ActualiserBarrieresInterdites(self):
+        #Etape une : Il est impossible, comme chaque barrière fait 2 case, de mettre une barrière à droite ou en bas d'une autre
+        print("Lama");
+
+
 
 class Joueur:
 
@@ -128,14 +134,14 @@ class Joueur:
                     for i in range(8):
                         for j in range(8):
                             #Si le clique est sur une barrière verticale :
-                            if (i*100-15 <= self.x and self.x <= i*100+15 and 100*j <= self.y and self.y <= 100*(j+1)):
+                            if ((i+1)*100-15 <= self.x and self.x <= (i+1)*100+15 and 100*j <= self.y and self.y <= 100*(j+1)):
                                 #Ses coordonnées sont donc i et j : on creer un nouveau coup avec ca
                                 newPlateau.barrieresVerticales[i][j] = 1;
                                 coup = Coup(plateau, newPlateau, 2);
                                 return coup;
 
                             #SI le clique est sur une barrière horizontale
-                            if (j*100-15 <= self.y and self.y <= j*100+15 and 100*i <= self.x and self.x <= 100*(i+1)):
+                            if ((j+1)*100-15 <= self.y and self.y <= (j+1)*100+15 and 100*i <= self.x and self.x <= 100*(i+1)):
                                 #Ses coordonnées sont donc i et j : on creer un nouveau coup avec ca
                                 newPlateau.barrieresHorizontales[i][j] = 1;
                                 coup = Coup(plateau, newPlateau, 2);
@@ -265,7 +271,7 @@ class Game:
 
 
         print("Coup interdit");
-        return False
+        return False;
 
 
 
@@ -289,9 +295,9 @@ class Game:
         for i in range(8):
             for j in range(8):
                 if self.plateau.barrieresVerticales[i][j] == 1:
-                    self.canvas.create_rectangle(i*100-15, j*100-7 ,i*100+15, (j+2)*100-7, fill="#f3e2bd");
+                    self.canvas.create_rectangle((i+1)*100-15, j*100-7 ,(i+1)*100+15, (j+2)*100-7, fill="#f3e2bd");
                 if self.plateau.barrieresHorizontales[i][j] == 1:
-                    self.canvas.create_rectangle(i*100-7, j*100-15 ,(i+2)*100-7, j*100+15, fill="#f3e2bd");
+                    self.canvas.create_rectangle(i*100-7, (j+1)*100-15 ,(i+2)*100-7, (j+1)*100+15, fill="#f3e2bd");
 
         #On actualise l'affichage
         self.canvas.update();
@@ -328,7 +334,7 @@ class Game:
             else:
                 coupDuJoueur.nouveauPlateau.nbBarriere[tour-1] -= 1;
                 #On appelle la fonction pour trouver les barrières interdites
-                coupDuJoueur.nouveauPlateau = ActualiserBarrieresInterdites(coupDuJoueur.nouveauPlateau);
+                coupDuJoueur.nouveauPlateau.ActualiserBarrieresInterdites();
                 print("Il reste " + str(coupDuJoueur.nouveauPlateau.nbBarriere[tour-1]) + " barrières au joueur " + str(tour));
 
             #On actualise le plateau
