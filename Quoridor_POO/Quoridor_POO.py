@@ -64,8 +64,31 @@ class Plateau:
 
     #Méthode méttant à jour barrieresHorizontalesInterdites et barrieresVerticalesInterdites en fonction du plateau
     def ActualiserBarrieresInterdites(self):
-        #Etape une : Il est impossible, comme chaque barrière fait 2 case, de mettre une barrière à droite ou en bas d'une autre
-        print("Lama");
+        for i in range(8):
+            for j in range(8):
+
+                #Etape 1 : Il est impossible, comme chaque barrière fait 2 case, de mettre une barrière directement a droite ou a gauche, et vis versa
+                 #On élimine donc logiquement les barrières impossible à mettre
+                if i > 0:
+                    if (self.barrieresHorizontales[i][j] == 1):
+                        self.barrieresHorizontalesInterdites[i-1][j] = 1;
+                if j > 0:
+                    if (self.barrieresVerticales[i][j] == 1):
+                        self.barrieresVerticalesInterdites[i][j-1] = 1;
+
+                if i < 7:
+                    if (self.barrieresHorizontales[i][j] == 1):
+                        self.barrieresHorizontalesInterdites[i+1][j] = 1;
+                if j < 7:
+                    if (self.barrieresVerticales[i][j] == 1):
+                        self.barrieresVerticalesInterdites[i][j+1] = 1;
+
+                #Etape 2 : Il est impossible de mettre une barrière en travers d'une autre
+                if (self.barrieresHorizontales[i][j] == 1):
+                    self.barrieresVerticalesInterdites[i][j] = 1
+
+                if (self.barrieresVerticales[i][j] == 1):
+                    self.barrieresHorizontalesInterdites[i][j] = 1
 
 
 
@@ -253,10 +276,10 @@ class Game:
         elif coupATester.typeDeCoup == 2:
         #On vérifie si il reste des barrières au joueur
             if (coupATester.nouveauPlateau.nbBarriere[indexJoueurEnCours-1] != 0):
-                #On vérifie si il n'y a pas déjja une barrière à cette endroit
+                #On vérifie si la barrière est autorisé
                 for i in range(8):
                     for j in range(8):
-                        if (coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 1 and coupATester.nouveauPlateau.barrieresHorizontalesInterdites[i][j] == 1):
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 1 and coupATester.nouveauPlateau.barrieresHorizontalesInterdites[i][j] == 1): 
                             print("Erreur : Impossible de placer cette barrière");
                             return False;
                         if (coupATester.nouveauPlateau.barrieresVerticales[i][j] == 1 and coupATester.nouveauPlateau.barrieresVerticalesInterdites[i][j] == 1):
