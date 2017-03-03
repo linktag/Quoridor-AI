@@ -12,7 +12,7 @@ Afin d'optimiser le temps que mettra l'IA a jouer, la selection des coups est jo
 les calculs inutiles.
 
 
-Ce projet sera effectué en POO afin de grandement simplifier et la comprehension du code, la lisibilité et la simplicité
+Ce projet sera effectué en POO afin de grandement simplifier la comprehension du code, la lisibilité et la simplicité
 
 """
 
@@ -89,6 +89,8 @@ class Plateau:
 
                 if (self.barrieresVerticales[i][j] == 1):
                     self.barrieresHorizontalesInterdites[i][j] = 1
+
+                #Etape 3 : Si une barrière pourrait interdir tout possibilité de gagner à un joueur
 
 
 
@@ -247,7 +249,7 @@ class Game:
 
     
 
-    #Methode ABSTRAITE vérifiant si un coup est autorisée
+    #Methode vérifiant si un coup est autorisée
     def VerifierSiCoupValide(self, coupATester, indexJoueurEnCours):
 
         #On verifie si le coup est un coup de deplacement ou non
@@ -256,21 +258,125 @@ class Game:
 
             #Coup ou x reste stable 
             if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] ):
-                #Coup case BAS
+                #Coup case HAUT
                 if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]+1):
-                    return True;
-                #coup case HAUT
+                    print("Coup vers le HAUT");
+
+                    #Vérification de l'absence de barrière
+                    i = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0];
+                    j = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1];
+                    
+                    #Si on est dans la colonne 0, c'est a dire tout a gauche
+                    if (i == 0):
+                        #On vérifie si il y a une barrière au dessus
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Si on est dans la colonne 8, c'est à dire tout a droite
+                    elif (i == 8):
+                        #On vérifie si il y a une barrière au dessus
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i-1][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Sinon, on vérifie les deux
+                    else:
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i-1][j-1] == 0 and coupATester.nouveauPlateau.barrieresHorizontales[i][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    
+                    
+
+                #coup case BAS
                 elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1]-1):
-                    return True;
+                    print("Coup vers le BAS");
+                    
+                    #Vérification de l'absence de barrière
+                    i = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0];
+                    j = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1];
+                    
+                    #Si on est dans la colonne 0, c'est a dire tout a gauche
+                    if (i == 0):
+                        #On vérifie si il y a une barrière en dessous
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Si on est dans la colonne 8, c'est à dire tout a droite
+                    elif (i == 8):
+                        #On vérifie si il y a une barrière en dessous
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i-1][j] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Sinon, on vérifie les deux
+                    else:
+                        if (coupATester.nouveauPlateau.barrieresHorizontales[i-1][j] == 0 and coupATester.nouveauPlateau.barrieresHorizontales[i][j] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
 
             #Coup ou y reste stable 
             if (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[1] ):
-                #Coup case DROIT
-                if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]+1):
-                    return True;
                 #Coup case GAUCHE
+                if(coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]+1):
+                    print("Coup vers la GAUCHE");
+
+                    #Vérification de l'absence de barrière
+                    i = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0];
+                    j = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1];
+                    
+                    #Si on est dans la ligne 0, c'est a dire tout en haut
+                    if (j == 0):
+                        #On vérifie si il y a une barrière à gauche
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i-1][j] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Si on est dans la ligne 8, c'est à dire tout en bas
+                    elif (j == 8):
+                        #On vérifie si il y a une barrière à gauche
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i-1][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Sinon, on vérifie les deux
+                    else:
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i-1][j] == 0 and coupATester.nouveauPlateau.barrieresVerticales[i-1][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+
+                #Coup case DROITE
                 elif (coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0] == coupATester.nouveauPlateau.CoordonneeJoueur(indexJoueurEnCours)[0]-1):
-                    return True;
+                    print("Coup vers la DROITE");
+
+                    #Vérification de l'absence de barrière
+                    i = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[0];
+                    j = coupATester.ancienPlateau.CoordonneeJoueur(indexJoueurEnCours)[1];
+                    
+                    #Si on est dans la ligne 0, c'est a dire tout en haut
+                    if (j == 0):
+                        #On vérifie si il y a une barrière à gauche
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i][j] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Si on est dans la ligne 8, c'est à dire tout en bas
+                    elif (j == 8):
+                        #On vérifie si il y a une barrière à gauche
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
+                    #Sinon, on vérifie les deux
+                    else:
+                        if (coupATester.nouveauPlateau.barrieresVerticales[i][j] == 0 and coupATester.nouveauPlateau.barrieresVerticales[i][j-1] == 0):
+                            return True;
+                        else:
+                            print("Barrière détectée");
 
         #Si il s'agit d'une barrière
         elif coupATester.typeDeCoup == 2:
@@ -382,7 +488,7 @@ class Game:
 
 
 
-#TOUT DEBUT DU PRGRAMME
+#TOUT DEBUT DU PROGRAMME
 
 #Première fonction appellée dans le programme
 def main():
