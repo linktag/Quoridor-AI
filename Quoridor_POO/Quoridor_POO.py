@@ -19,10 +19,10 @@ Ce projet sera effectué en POO afin de grandement simplifier la comprehension du
 #IMPORTATION
 import tkinter as tk
 from math import floor
-from copy import deepcopy
 from random import randint
 import queue
 import time
+import _pickle as cPickle
 
 
 #CLASSES UTILISEES
@@ -75,28 +75,28 @@ class Plateau:
         if (self.CoordonneeJoueur(numeroJoueur)[1] > 0):
             #On vérifie si une barrière se trouve au dessus
             if (self.CoordonneeJoueur(numeroJoueur)[0] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] == 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] != 0 and self.CoordonneeJoueur(numeroJoueur)[0] != 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
-                coup = deepcopy(self);
+                coup = cPickle.loads(cPickle.dumps(self, -1));
                 coup.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0], self.c_joueurs[numeroJoueur-1][1]-1);
                 listeCoups.append(coup);
 
         #Coup vers le bas
         if (self.CoordonneeJoueur(numeroJoueur)[1] < 8):
             if (self.CoordonneeJoueur(numeroJoueur)[0] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] == 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] != 0 and self.CoordonneeJoueur(numeroJoueur)[0] != 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0):
-                coup = deepcopy(self);
+                coup = cPickle.loads(cPickle.dumps(self, -1));
                 coup.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0], self.c_joueurs[numeroJoueur-1][1]+1);
                 listeCoups.append(coup);
 
         #Coup vers la gauche
         if (self.CoordonneeJoueur(numeroJoueur)[0] > 0):
             if (self.CoordonneeJoueur(numeroJoueur)[1] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] == 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] != 0 and self.CoordonneeJoueur(numeroJoueur)[1] != 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
-                coup = deepcopy(self);
+                coup = cPickle.loads(cPickle.dumps(self, -1));
                 coup.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0]-1, self.c_joueurs[numeroJoueur-1][1]);
                 listeCoups.append(coup);
 
         #DROITE
         if (self.CoordonneeJoueur(numeroJoueur)[0] < 8):
             if (self.CoordonneeJoueur(numeroJoueur)[1] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] == 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] != 0 and self.CoordonneeJoueur(numeroJoueur)[1] != 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
-                coup = deepcopy(self);
+                coup = cPickle.loads(cPickle.dumps(self, -1));
                 coup.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0]+1, self.c_joueurs[numeroJoueur-1][1]);
                 listeCoups.append(coup);
 
@@ -105,11 +105,11 @@ class Plateau:
         for i in range(8):
             for j in range(8):
                 if (self.barrieresHorizontalesInterdites[i][j] == 0 and self.barrieresHorizontales[i][j] == 0):
-                    coupBarriere = deepcopy(self);
+                    coupBarriere = cPickle.loads(cPickle.dumps(self, -1));
                     coupBarriere.barrieresHorizontalesInterdites[i][j] == 1;
                     listeCoups.append(coupBarriere);
                 if (self.barrieresVerticalesInterdites[i][j] == 0 and self.barrieresVerticales[i][j] == 0):
-                    coupBarriere = deepcopy(self);
+                    coupBarriere = cPickle.loads(cPickle.dumps(self, -1));
                     coupBarriere.barrieresVerticales[i][j] == 1;
                     listeCoups.append(coupBarriere);
 
@@ -307,32 +307,35 @@ class Plateau:
         #- il n'y a pas de mur entre nous et la case adjacente
         #- on n'est pas déja allez sur cette case
 
-        #On essaie d'aller sur la case du HAUT
-        if (positionActuelle[1] > 0): #Si on n'est pas deja tout en haut
-            if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]-1] == False):#Si on n'a pas deja visiter cette case
-                #On vérifie si une barrière se trouve au dessus
-                if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0):
-                    #On peut y acceder !
-                    newPosition = (positionActuelle[0], positionActuelle[1] - 1);
-                    #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
-                    #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
-                    if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
-                        return True; 
+        #De plus, pour optimiser la fonction :
+        #- Si on est le joueur 1 : On test les mouvements dans cet ordre : HAUT, GAUCHE, DROITE, BAS
+        #Pour le joueur 2, c'est BAS, GAUCHE, DROITE, HAUT
 
-
-
-        #On fait la même chose avec les autres directions :
-        #BAS
-        if (positionActuelle[1] < 8):#Si on est pas tout en bas
-            if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]+1] == False):#Si on n'a pas deja visiter cette case
-                #On vérifie si une barrière se trouve en dessous
-                if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0):
-                    #On peut y acceder !
-                    newPosition = (positionActuelle[0], positionActuelle[1] + 1);
-                    #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
-                    #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
-                    if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
-                        return True; 
+        if (ligneAAtteindre == 0): #Implicitement : Si on est le joueur 1
+            #On essaie d'aller sur la case du HAUT
+            if (positionActuelle[1] > 0): #Si on n'est pas deja tout en haut
+                if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]-1] == False):#Si on n'a pas deja visiter cette case
+                    #On vérifie si une barrière se trouve au dessus
+                    if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0):
+                        #On peut y acceder !
+                        newPosition = (positionActuelle[0], positionActuelle[1] - 1);
+                        #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
+                        #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
+                        if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
+                            return True; 
+        else:
+            #On fait la même chose avec les autres directions :
+            #BAS
+            if (positionActuelle[1] < 8):#Si on est pas tout en bas
+                if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]+1] == False):#Si on n'a pas deja visiter cette case
+                    #On vérifie si une barrière se trouve en dessous
+                    if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0):
+                        #On peut y acceder !
+                        newPosition = (positionActuelle[0], positionActuelle[1] + 1);
+                        #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
+                        #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
+                        if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
+                            return True; 
 
 
         #GAUCHE
@@ -357,6 +360,31 @@ class Plateau:
                     if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
                         return True; 
 
+        if (ligneAAtteindre == 0): #Implicitement : Si on est le joueur 1
+            #BAS
+            if (positionActuelle[1] < 8):#Si on est pas tout en bas
+                if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]+1] == False):#Si on n'a pas deja visiter cette case
+                    #On vérifie si une barrière se trouve en dessous
+                    if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]] == 0):
+                        #On peut y acceder !
+                        newPosition = (positionActuelle[0], positionActuelle[1] + 1);
+                        #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
+                        #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
+                        if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
+                            return True; 
+        else:
+            #HAUT
+            if (positionActuelle[1] > 0): #Si on n'est pas deja tout en haut
+                if (self.graphe[k-1][positionActuelle[0]][positionActuelle[1]-1] == False):#Si on n'a pas deja visiter cette case
+                    #On vérifie si une barrière se trouve au dessus
+                    if (positionActuelle[0] == 0 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0) or (positionActuelle[0] == 8 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0) or (positionActuelle[0] != 0 and positionActuelle[0] != 8 and self.barrieresHorizontales[positionActuelle[0]][positionActuelle[1]-1] == 0 and self.barrieresHorizontales[positionActuelle[0]-1][positionActuelle[1]-1] == 0):
+                        #On peut y acceder !
+                        newPosition = (positionActuelle[0], positionActuelle[1] - 1);
+                        #Au passage, on vérifie si l'exploration des lignes suivantes a permi de trouver le chemin ou non
+                        #Et si oui, on renvoit oui a notre tour pour faire remonter la nouvelle
+                        if (self.DepthFirstSearch(newPosition, k, ligneAAtteindre) == True):
+                            return True; 
+            
 
         #Rien n'a été trouvé, on renvoit faux
         return False;
@@ -391,9 +419,7 @@ class IaLevel1:
     #Fonction Jouer qui fait jouer l'IA
     def Jouer(self, fenetre, canvas, proportion, plateau):
         #On a un plateau sous les yeux : il faut trouver le meilleur coup possible
-        temps = time.time();
         tousLesCoups = plateau.TousLesCoups(self.numero);
-        print("Temps pour générer les coups: " + str(time.time()-temps));
 
         #On les notes tous et on joue le meilleur
         indexsMeilleursCoups = [];
@@ -476,7 +502,7 @@ class Joueur:
             #On détecte si le clique est sur une case ou sur un vide pour mettre une barrière
 
             #On creer le nouveau coup
-            newPlateau = deepcopy(plateau); #On effectue un deepcopy pour ne pas juste copier la reference et vraimetn creer un nouveau coup
+            newPlateau = cPickle.loads(cPickle.dumps(plateau, -1)); #On effectue un deepcopy pour ne pas juste copier la reference et vraimetn creer un nouveau coup
 
             cliquerSurUneCase = False;
             for i in range(9):
@@ -851,7 +877,7 @@ def main():
 
     #On lance le jeu
     j1 = IaLevel1(1)
-    j2 = Joueur(2)
+    j2 = IaLevel1(2)
     game = Game(j1,j2,100)
     game.CommencerPartie()
 
