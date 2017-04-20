@@ -29,6 +29,7 @@ from IaLevel1 import IaLevel1
 from IaLevel1 import IaLevel1Evolutive
 
 from IaLevel2 import IaLevel2
+from IaLevel2 import IaLevel2Acceleree
 
 
 
@@ -849,7 +850,7 @@ def main():
 
     #On lance le jeu
     j1 = IaLevel1(1)
-    j2 = IaLevel1Evolutive(2, 1, 1, 10)
+    j2 = IaLevel2Acceleree(2)
     game = Game(j1,j2,100)
     game.CommencerPartie()
 
@@ -907,4 +908,4 @@ def train():
 
 #Definition de la fonction main
 if __name__ == "__main__":
-    train()
+    main()
