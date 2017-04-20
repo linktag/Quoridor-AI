@@ -1,11 +1,18 @@
-#include <Python.h>
-#include <list>         
+#include <Python.h>     
 #include <queue>
+#include <set>
 
 using namespace std;
 
 //C++ function
-int BreadthFirstSearch(vector<int> positionDeDepart, int ligneAAtteindre, int barrieresHorizontales[8][8], int barrieresVerticales[8][8])
+void print_array(std::vector< std::vector < int > > myarray)
+{
+    for (int i=0; i<2; i++)
+        for (int j=0; j<2; j++)
+            printf("[%d][%d] = [%d]\n", i, j, myarray[i][j]);
+}
+
+int BreadthFirstSearch(vector<int> positionDeDepart, int ligneAAtteindre, std::vector< std::vector < int > > barrieresHorizontales, std::vector< std::vector < int > > barrieresVerticales)
 {
 	//On creer tout ce qu'il faut pour l'algorithme
 	queue<vector<int>> liste;

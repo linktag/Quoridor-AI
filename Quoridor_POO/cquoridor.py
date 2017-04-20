@@ -159,462 +159,240 @@ class SwigPyIterator(_object):
 SwigPyIterator_swigregister = _cquoridor.SwigPyIterator_swigregister
 SwigPyIterator_swigregister(SwigPyIterator)
 
-class IntVector(_object):
+class Line(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, IntVector, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Line, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, IntVector, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, Line, name)
     __repr__ = _swig_repr
 
     def iterator(self):
-        return _cquoridor.IntVector_iterator(self)
+        return _cquoridor.Line_iterator(self)
     def __iter__(self):
         return self.iterator()
 
     def __nonzero__(self):
-        return _cquoridor.IntVector___nonzero__(self)
+        return _cquoridor.Line___nonzero__(self)
 
     def __bool__(self):
-        return _cquoridor.IntVector___bool__(self)
+        return _cquoridor.Line___bool__(self)
 
     def __len__(self):
-        return _cquoridor.IntVector___len__(self)
+        return _cquoridor.Line___len__(self)
 
     def __getslice__(self, i, j):
-        return _cquoridor.IntVector___getslice__(self, i, j)
+        return _cquoridor.Line___getslice__(self, i, j)
 
     def __setslice__(self, *args):
-        return _cquoridor.IntVector___setslice__(self, *args)
+        return _cquoridor.Line___setslice__(self, *args)
 
     def __delslice__(self, i, j):
-        return _cquoridor.IntVector___delslice__(self, i, j)
+        return _cquoridor.Line___delslice__(self, i, j)
 
     def __delitem__(self, *args):
-        return _cquoridor.IntVector___delitem__(self, *args)
+        return _cquoridor.Line___delitem__(self, *args)
 
     def __getitem__(self, *args):
-        return _cquoridor.IntVector___getitem__(self, *args)
+        return _cquoridor.Line___getitem__(self, *args)
 
     def __setitem__(self, *args):
-        return _cquoridor.IntVector___setitem__(self, *args)
+        return _cquoridor.Line___setitem__(self, *args)
 
     def pop(self):
-        return _cquoridor.IntVector_pop(self)
+        return _cquoridor.Line_pop(self)
 
     def append(self, x):
-        return _cquoridor.IntVector_append(self, x)
+        return _cquoridor.Line_append(self, x)
 
     def empty(self):
-        return _cquoridor.IntVector_empty(self)
+        return _cquoridor.Line_empty(self)
 
     def size(self):
-        return _cquoridor.IntVector_size(self)
+        return _cquoridor.Line_size(self)
 
     def swap(self, v):
-        return _cquoridor.IntVector_swap(self, v)
+        return _cquoridor.Line_swap(self, v)
 
     def begin(self):
-        return _cquoridor.IntVector_begin(self)
+        return _cquoridor.Line_begin(self)
 
     def end(self):
-        return _cquoridor.IntVector_end(self)
+        return _cquoridor.Line_end(self)
 
     def rbegin(self):
-        return _cquoridor.IntVector_rbegin(self)
+        return _cquoridor.Line_rbegin(self)
 
     def rend(self):
-        return _cquoridor.IntVector_rend(self)
+        return _cquoridor.Line_rend(self)
 
     def clear(self):
-        return _cquoridor.IntVector_clear(self)
+        return _cquoridor.Line_clear(self)
 
     def get_allocator(self):
-        return _cquoridor.IntVector_get_allocator(self)
+        return _cquoridor.Line_get_allocator(self)
 
     def pop_back(self):
-        return _cquoridor.IntVector_pop_back(self)
+        return _cquoridor.Line_pop_back(self)
 
     def erase(self, *args):
-        return _cquoridor.IntVector_erase(self, *args)
+        return _cquoridor.Line_erase(self, *args)
 
     def __init__(self, *args):
-        this = _cquoridor.new_IntVector(*args)
+        this = _cquoridor.new_Line(*args)
         try:
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
 
     def push_back(self, x):
-        return _cquoridor.IntVector_push_back(self, x)
+        return _cquoridor.Line_push_back(self, x)
 
     def front(self):
-        return _cquoridor.IntVector_front(self)
+        return _cquoridor.Line_front(self)
 
     def back(self):
-        return _cquoridor.IntVector_back(self)
+        return _cquoridor.Line_back(self)
 
     def assign(self, n, x):
-        return _cquoridor.IntVector_assign(self, n, x)
+        return _cquoridor.Line_assign(self, n, x)
 
     def resize(self, *args):
-        return _cquoridor.IntVector_resize(self, *args)
+        return _cquoridor.Line_resize(self, *args)
 
     def insert(self, *args):
-        return _cquoridor.IntVector_insert(self, *args)
+        return _cquoridor.Line_insert(self, *args)
 
     def reserve(self, n):
-        return _cquoridor.IntVector_reserve(self, n)
+        return _cquoridor.Line_reserve(self, n)
 
     def capacity(self):
-        return _cquoridor.IntVector_capacity(self)
-    __swig_destroy__ = _cquoridor.delete_IntVector
+        return _cquoridor.Line_capacity(self)
+    __swig_destroy__ = _cquoridor.delete_Line
     __del__ = lambda self: None
-IntVector_swigregister = _cquoridor.IntVector_swigregister
-IntVector_swigregister(IntVector)
+Line_swigregister = _cquoridor.Line_swigregister
+Line_swigregister(Line)
 
-class IntVectorVector(_object):
+class Array(_object):
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, IntVectorVector, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Array, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, IntVectorVector, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, Array, name)
     __repr__ = _swig_repr
 
     def iterator(self):
-        return _cquoridor.IntVectorVector_iterator(self)
+        return _cquoridor.Array_iterator(self)
     def __iter__(self):
         return self.iterator()
 
     def __nonzero__(self):
-        return _cquoridor.IntVectorVector___nonzero__(self)
+        return _cquoridor.Array___nonzero__(self)
 
     def __bool__(self):
-        return _cquoridor.IntVectorVector___bool__(self)
+        return _cquoridor.Array___bool__(self)
 
     def __len__(self):
-        return _cquoridor.IntVectorVector___len__(self)
+        return _cquoridor.Array___len__(self)
 
     def __getslice__(self, i, j):
-        return _cquoridor.IntVectorVector___getslice__(self, i, j)
+        return _cquoridor.Array___getslice__(self, i, j)
 
     def __setslice__(self, *args):
-        return _cquoridor.IntVectorVector___setslice__(self, *args)
+        return _cquoridor.Array___setslice__(self, *args)
 
     def __delslice__(self, i, j):
-        return _cquoridor.IntVectorVector___delslice__(self, i, j)
+        return _cquoridor.Array___delslice__(self, i, j)
 
     def __delitem__(self, *args):
-        return _cquoridor.IntVectorVector___delitem__(self, *args)
+        return _cquoridor.Array___delitem__(self, *args)
 
     def __getitem__(self, *args):
-        return _cquoridor.IntVectorVector___getitem__(self, *args)
+        return _cquoridor.Array___getitem__(self, *args)
 
     def __setitem__(self, *args):
-        return _cquoridor.IntVectorVector___setitem__(self, *args)
+        return _cquoridor.Array___setitem__(self, *args)
 
     def pop(self):
-        return _cquoridor.IntVectorVector_pop(self)
+        return _cquoridor.Array_pop(self)
 
     def append(self, x):
-        return _cquoridor.IntVectorVector_append(self, x)
+        return _cquoridor.Array_append(self, x)
 
     def empty(self):
-        return _cquoridor.IntVectorVector_empty(self)
+        return _cquoridor.Array_empty(self)
 
     def size(self):
-        return _cquoridor.IntVectorVector_size(self)
+        return _cquoridor.Array_size(self)
 
     def swap(self, v):
-        return _cquoridor.IntVectorVector_swap(self, v)
+        return _cquoridor.Array_swap(self, v)
 
     def begin(self):
-        return _cquoridor.IntVectorVector_begin(self)
+        return _cquoridor.Array_begin(self)
 
     def end(self):
-        return _cquoridor.IntVectorVector_end(self)
+        return _cquoridor.Array_end(self)
 
     def rbegin(self):
-        return _cquoridor.IntVectorVector_rbegin(self)
+        return _cquoridor.Array_rbegin(self)
 
     def rend(self):
-        return _cquoridor.IntVectorVector_rend(self)
+        return _cquoridor.Array_rend(self)
 
     def clear(self):
-        return _cquoridor.IntVectorVector_clear(self)
+        return _cquoridor.Array_clear(self)
 
     def get_allocator(self):
-        return _cquoridor.IntVectorVector_get_allocator(self)
+        return _cquoridor.Array_get_allocator(self)
 
     def pop_back(self):
-        return _cquoridor.IntVectorVector_pop_back(self)
+        return _cquoridor.Array_pop_back(self)
 
     def erase(self, *args):
-        return _cquoridor.IntVectorVector_erase(self, *args)
+        return _cquoridor.Array_erase(self, *args)
 
     def __init__(self, *args):
-        this = _cquoridor.new_IntVectorVector(*args)
+        this = _cquoridor.new_Array(*args)
         try:
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
 
     def push_back(self, x):
-        return _cquoridor.IntVectorVector_push_back(self, x)
+        return _cquoridor.Array_push_back(self, x)
 
     def front(self):
-        return _cquoridor.IntVectorVector_front(self)
+        return _cquoridor.Array_front(self)
 
     def back(self):
-        return _cquoridor.IntVectorVector_back(self)
+        return _cquoridor.Array_back(self)
 
     def assign(self, n, x):
-        return _cquoridor.IntVectorVector_assign(self, n, x)
+        return _cquoridor.Array_assign(self, n, x)
 
     def resize(self, *args):
-        return _cquoridor.IntVectorVector_resize(self, *args)
+        return _cquoridor.Array_resize(self, *args)
 
     def insert(self, *args):
-        return _cquoridor.IntVectorVector_insert(self, *args)
+        return _cquoridor.Array_insert(self, *args)
 
     def reserve(self, n):
-        return _cquoridor.IntVectorVector_reserve(self, n)
+        return _cquoridor.Array_reserve(self, n)
 
     def capacity(self):
-        return _cquoridor.IntVectorVector_capacity(self)
-    __swig_destroy__ = _cquoridor.delete_IntVectorVector
+        return _cquoridor.Array_capacity(self)
+    __swig_destroy__ = _cquoridor.delete_Array
     __del__ = lambda self: None
-IntVectorVector_swigregister = _cquoridor.IntVectorVector_swigregister
-IntVectorVector_swigregister(IntVectorVector)
-
-class DoubleVector(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleVector, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, DoubleVector, name)
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _cquoridor.DoubleVector_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _cquoridor.DoubleVector___nonzero__(self)
-
-    def __bool__(self):
-        return _cquoridor.DoubleVector___bool__(self)
-
-    def __len__(self):
-        return _cquoridor.DoubleVector___len__(self)
-
-    def __getslice__(self, i, j):
-        return _cquoridor.DoubleVector___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _cquoridor.DoubleVector___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _cquoridor.DoubleVector___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _cquoridor.DoubleVector___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _cquoridor.DoubleVector___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _cquoridor.DoubleVector___setitem__(self, *args)
-
-    def pop(self):
-        return _cquoridor.DoubleVector_pop(self)
-
-    def append(self, x):
-        return _cquoridor.DoubleVector_append(self, x)
-
-    def empty(self):
-        return _cquoridor.DoubleVector_empty(self)
-
-    def size(self):
-        return _cquoridor.DoubleVector_size(self)
-
-    def swap(self, v):
-        return _cquoridor.DoubleVector_swap(self, v)
-
-    def begin(self):
-        return _cquoridor.DoubleVector_begin(self)
-
-    def end(self):
-        return _cquoridor.DoubleVector_end(self)
-
-    def rbegin(self):
-        return _cquoridor.DoubleVector_rbegin(self)
-
-    def rend(self):
-        return _cquoridor.DoubleVector_rend(self)
-
-    def clear(self):
-        return _cquoridor.DoubleVector_clear(self)
-
-    def get_allocator(self):
-        return _cquoridor.DoubleVector_get_allocator(self)
-
-    def pop_back(self):
-        return _cquoridor.DoubleVector_pop_back(self)
-
-    def erase(self, *args):
-        return _cquoridor.DoubleVector_erase(self, *args)
-
-    def __init__(self, *args):
-        this = _cquoridor.new_DoubleVector(*args)
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-
-    def push_back(self, x):
-        return _cquoridor.DoubleVector_push_back(self, x)
-
-    def front(self):
-        return _cquoridor.DoubleVector_front(self)
-
-    def back(self):
-        return _cquoridor.DoubleVector_back(self)
-
-    def assign(self, n, x):
-        return _cquoridor.DoubleVector_assign(self, n, x)
-
-    def resize(self, *args):
-        return _cquoridor.DoubleVector_resize(self, *args)
-
-    def insert(self, *args):
-        return _cquoridor.DoubleVector_insert(self, *args)
-
-    def reserve(self, n):
-        return _cquoridor.DoubleVector_reserve(self, n)
-
-    def capacity(self):
-        return _cquoridor.DoubleVector_capacity(self)
-    __swig_destroy__ = _cquoridor.delete_DoubleVector
-    __del__ = lambda self: None
-DoubleVector_swigregister = _cquoridor.DoubleVector_swigregister
-DoubleVector_swigregister(DoubleVector)
-
-class DoubleVectorVector(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DoubleVectorVector, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, DoubleVectorVector, name)
-    __repr__ = _swig_repr
-
-    def iterator(self):
-        return _cquoridor.DoubleVectorVector_iterator(self)
-    def __iter__(self):
-        return self.iterator()
-
-    def __nonzero__(self):
-        return _cquoridor.DoubleVectorVector___nonzero__(self)
-
-    def __bool__(self):
-        return _cquoridor.DoubleVectorVector___bool__(self)
-
-    def __len__(self):
-        return _cquoridor.DoubleVectorVector___len__(self)
-
-    def __getslice__(self, i, j):
-        return _cquoridor.DoubleVectorVector___getslice__(self, i, j)
-
-    def __setslice__(self, *args):
-        return _cquoridor.DoubleVectorVector___setslice__(self, *args)
-
-    def __delslice__(self, i, j):
-        return _cquoridor.DoubleVectorVector___delslice__(self, i, j)
-
-    def __delitem__(self, *args):
-        return _cquoridor.DoubleVectorVector___delitem__(self, *args)
-
-    def __getitem__(self, *args):
-        return _cquoridor.DoubleVectorVector___getitem__(self, *args)
-
-    def __setitem__(self, *args):
-        return _cquoridor.DoubleVectorVector___setitem__(self, *args)
-
-    def pop(self):
-        return _cquoridor.DoubleVectorVector_pop(self)
-
-    def append(self, x):
-        return _cquoridor.DoubleVectorVector_append(self, x)
-
-    def empty(self):
-        return _cquoridor.DoubleVectorVector_empty(self)
-
-    def size(self):
-        return _cquoridor.DoubleVectorVector_size(self)
-
-    def swap(self, v):
-        return _cquoridor.DoubleVectorVector_swap(self, v)
-
-    def begin(self):
-        return _cquoridor.DoubleVectorVector_begin(self)
-
-    def end(self):
-        return _cquoridor.DoubleVectorVector_end(self)
-
-    def rbegin(self):
-        return _cquoridor.DoubleVectorVector_rbegin(self)
-
-    def rend(self):
-        return _cquoridor.DoubleVectorVector_rend(self)
-
-    def clear(self):
-        return _cquoridor.DoubleVectorVector_clear(self)
-
-    def get_allocator(self):
-        return _cquoridor.DoubleVectorVector_get_allocator(self)
-
-    def pop_back(self):
-        return _cquoridor.DoubleVectorVector_pop_back(self)
-
-    def erase(self, *args):
-        return _cquoridor.DoubleVectorVector_erase(self, *args)
-
-    def __init__(self, *args):
-        this = _cquoridor.new_DoubleVectorVector(*args)
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-
-    def push_back(self, x):
-        return _cquoridor.DoubleVectorVector_push_back(self, x)
-
-    def front(self):
-        return _cquoridor.DoubleVectorVector_front(self)
-
-    def back(self):
-        return _cquoridor.DoubleVectorVector_back(self)
-
-    def assign(self, n, x):
-        return _cquoridor.DoubleVectorVector_assign(self, n, x)
-
-    def resize(self, *args):
-        return _cquoridor.DoubleVectorVector_resize(self, *args)
-
-    def insert(self, *args):
-        return _cquoridor.DoubleVectorVector_insert(self, *args)
-
-    def reserve(self, n):
-        return _cquoridor.DoubleVectorVector_reserve(self, n)
-
-    def capacity(self):
-        return _cquoridor.DoubleVectorVector_capacity(self)
-    __swig_destroy__ = _cquoridor.delete_DoubleVectorVector
-    __del__ = lambda self: None
-DoubleVectorVector_swigregister = _cquoridor.DoubleVectorVector_swigregister
-DoubleVectorVector_swigregister(DoubleVectorVector)
+Array_swigregister = _cquoridor.Array_swigregister
+Array_swigregister(Array)
 
 
 def BreadthFirstSearch(positionDeDepart, ligneAAtteindre, barrieresHorizontales, barrieresVerticales):
     return _cquoridor.BreadthFirstSearch(positionDeDepart, ligneAAtteindre, barrieresHorizontales, barrieresVerticales)
 BreadthFirstSearch = _cquoridor.BreadthFirstSearch
+
+def print_array(myarray):
+    return _cquoridor.print_array(myarray)
+print_array = _cquoridor.print_array
 # This file is compatible with both classic and new-style classes.
 
 

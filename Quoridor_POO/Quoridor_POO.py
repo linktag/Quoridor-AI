@@ -849,8 +849,8 @@ class Game:
 def main():
 
     #On lance le jeu
-    j1 = IaLevel1(1)
-    j2 = IaLevel2Acceleree(2)
+    j1 = IaLevel2Acceleree(1)
+    j2 = IaLevel1(2)
     game = Game(j1,j2,100)
     game.CommencerPartie()
 

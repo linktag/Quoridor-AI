@@ -6,9 +6,8 @@
 %}
 %include "std_vector.i"
 namespace std {
-   %template(IntVector) vector<int>;
-   %template(IntVectorVector) vector<vector<int>>;
-   %template(DoubleVector) vector<double>;
-   %template(DoubleVectorVector) vector<vector<double>>;
+%template(Line)  vector < int >;
+    %template(Array) vector < vector < int> >;
 }
-int BreadthFirstSearch(vector<int> positionDeDepart, int ligneAAtteindre, int barrieresHorizontales[8][8], int barrieresVerticales[8][8]);
+int BreadthFirstSearch(vector<int> positionDeDepart, int ligneAAtteindre, std::vector< std::vector < int > > barrieresHorizontales, std::vector< std::vector < int > > barrieresVerticales);
+void print_array(std::vector< std::vector < int > > myarray);

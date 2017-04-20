@@ -1,4 +1,5 @@
 from random import randint
+from IaLevel1 import IaLevel1
 
 class IaLevel2:
     """
@@ -102,7 +103,10 @@ class IaLevel2Acceleree:
     #Sauf qu'au lieu d'evaluer les coups directement a partir de la fonction d'evaluation, on passe par la fonction Anticpation
     def Jouer(self, fenetre, canvas, proportion, plateau):
         #Pour jouer, nous allons dans un premier temps g�n�rer tous les coups que nous pouvons jouer
-        tousLesCoups = plateau.TousLesCoups(self.numero);
+        if (plateau.nbBarriere[self.numero-1] > 0):
+            tousLesCoups = plateau.TousLesCoups(self.numero);
+        else:
+            tousLesCoups = plateau.TousLesCoupsSansBarrieres(self.numero);
 
         #On les notes tous et on joue le meilleur
         meilleurNote = -100000;
@@ -134,7 +138,7 @@ class IaLevel2Acceleree:
         #On va donc chercher le meilleur coup parmis tous les coups simul�s
         pireNote = 1000;
         for coup in tousLesCoups:
-            note = IaLevel2Acceleree.Evaluer(coup.nouveauPlateau, numero);
+            note = IaLevel1.Evaluer(coup.nouveauPlateau, numero);
             if (note <= limite):
                 return note;
             if (note < pireNote):
