@@ -24,6 +24,13 @@ import queue
 import time
 import _pickle as cPickle
 
+#Add Files
+from IaLevel1 import IaLevel1
+from IaLevel1 import IaLevel1Evolutive
+
+from IaLevel2 import IaLevel2
+
+
 
 #CLASSES UTILISEES
 
@@ -99,7 +106,7 @@ class Plateau:
                 newPlateau.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0]-1, self.c_joueurs[numeroJoueur-1][1]);
                 listeCoups.append(Coup(self, newPlateau, 1));
 
-        #DROITE
+        #Coup vers la droite
         if (self.CoordonneeJoueur(numeroJoueur)[0] < 8):
             if (self.CoordonneeJoueur(numeroJoueur)[1] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] == 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] != 0 and self.CoordonneeJoueur(numeroJoueur)[1] != 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
                 newPlateau = cPickle.loads(cPickle.dumps(self, -1));
@@ -112,12 +119,49 @@ class Plateau:
             for j in range(8):
                 if (self.barrieresHorizontalesInterdites[i][j] == 0 and self.barrieresHorizontales[i][j] == 0):
                     newPlateau = cPickle.loads(cPickle.dumps(self, -1));
-                    newPlateau.barrieresHorizontales[i][j] == 1;
+                    newPlateau.barrieresHorizontales[i][j] = 1;
                     listeCoups.append(Coup(self, newPlateau, 2));
                 if (self.barrieresVerticalesInterdites[i][j] == 0 and self.barrieresVerticales[i][j] == 0):
                     newPlateau = cPickle.loads(cPickle.dumps(self, -1));
-                    newPlateau.barrieresVerticales[i][j] == 1;
+                    newPlateau.barrieresVerticales[i][j] = 1;
                     listeCoups.append(Coup(self, newPlateau, 2));
+
+        #On retourne le tout
+        return listeCoups;
+
+    #Methode alternative qui renvoit les 4 coups de déplacements si possible, sans renvoyer les coups de barrières
+    def TousLesCoupsSansBarrieres(self, numeroJoueur):
+        listeCoups = [];
+
+        #On commence par ajouter tous les coups qui sont liés au déplacement
+        #Coup vers le haut
+        if (self.CoordonneeJoueur(numeroJoueur)[1] > 0):
+            #On vérifie si une barrière se trouve au dessus
+            if (self.CoordonneeJoueur(numeroJoueur)[0] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] == 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] != 0 and self.CoordonneeJoueur(numeroJoueur)[0] != 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
+                newPlateau = cPickle.loads(cPickle.dumps(self, -1));
+                newPlateau.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0], self.c_joueurs[numeroJoueur-1][1]-1);
+                listeCoups.append(Coup(self, newPlateau, 1));
+
+        #Coup vers le bas
+        if (self.CoordonneeJoueur(numeroJoueur)[1] < 8):
+            if (self.CoordonneeJoueur(numeroJoueur)[0] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] == 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[0] != 0 and self.CoordonneeJoueur(numeroJoueur)[0] != 8 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresHorizontales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0):
+                newPlateau = cPickle.loads(cPickle.dumps(self, -1));
+                newPlateau.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0], self.c_joueurs[numeroJoueur-1][1]+1);
+                listeCoups.append(Coup(self, newPlateau, 1));
+
+        #Coup vers la gauche
+        if (self.CoordonneeJoueur(numeroJoueur)[0] > 0):
+            if (self.CoordonneeJoueur(numeroJoueur)[1] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] == 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] != 0 and self.CoordonneeJoueur(numeroJoueur)[1] != 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]-1][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
+                newPlateau = cPickle.loads(cPickle.dumps(self, -1));
+                newPlateau.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0]-1, self.c_joueurs[numeroJoueur-1][1]);
+                listeCoups.append(Coup(self, newPlateau, 1));
+
+        #Coup vers la droite
+        if (self.CoordonneeJoueur(numeroJoueur)[0] < 8):
+            if (self.CoordonneeJoueur(numeroJoueur)[1] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] == 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0) or (self.CoordonneeJoueur(numeroJoueur)[1] != 0 and self.CoordonneeJoueur(numeroJoueur)[1] != 8 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]] == 0 and self.barrieresVerticales[self.CoordonneeJoueur(numeroJoueur)[0]][self.CoordonneeJoueur(numeroJoueur)[1]-1] == 0):
+                newPlateau = cPickle.loads(cPickle.dumps(self, -1));
+                newPlateau.c_joueurs[numeroJoueur-1] = (self.c_joueurs[numeroJoueur-1][0]+1, self.c_joueurs[numeroJoueur-1][1]);
+                listeCoups.append(Coup(self, newPlateau, 1));
 
         #On retourne le tout
         return listeCoups;
@@ -200,8 +244,8 @@ class Plateau:
 
 
     #Methode renvoyant la distance la plus courte pour un joueur pour parvenir au point d'arrivée
-    #Cette algorithme est beacoup plus long que celui de la fonction explore, mais lui renvoie le chemin le plus court,
-    #Alors que la fonction Explore ne fait que dire si oui ou non le chemin est accessible ou pas
+    #Cette algorithme est beacoup plus long que celui de la fonction DepthFirstSearch, mais lui renvoie le chemin le plus court,
+    #Alors que la fonction DepthFirstSearch ne fait que dire si oui ou non le chemin est accessible ou pas
     #Bien qu'elles se ressemblent, elles ont donc des fonctions différentes
     #---
     #positionDeDepart est la position de départ du joueur
@@ -398,245 +442,6 @@ class Plateau:
 
 
 
-
-
-class IaLevel1:
-    """
-    Classe de l'IA de niveau 1, la plus faible.
-    Elle n'est pas capable d'anticiper les actions adverses, elle voit seulement le meilleur coup à faire avec ce qu'elle a sous les yeux.
-    Elle n'est pas très difficile à battre, elle tombe naturelement dans tous les pièges puisqu'elle ne réfléchis pas.
-    Caractéristiques :
-    - Tres faible, presque n'importe qui peut la battre
-    - Tres rapide a jouer, elle joue un coup en environ 2.5 secondes
-    
-    Cette classe, comme toutes les classe IA, reprend la structure d'une classe joueur, comme une IA est un "joueur amélioré"
-    Elle dispose donc des mêmes fonctions (bien qu'elle en est en plus), ce qui permet de ne pas avoir a réécrire le code du jeu :
-    Le jeu jjoue avec elle comme il le ferrait avec un jouer humain, c'est une sorte d'utilisation de l'héritage en POO
-    C'est d'ailleurs la force d'écriture de ce code, qui peut simplement en changeant les réglages s'adapter à tous les scénarios.
-    """
-
-    #Constructeur
-    def __init__ (self, numero):
-        self.numero = numero;
-
-    #Methodes
-    #Fonction Jouer qui fait jouer l'IA
-    def Jouer(self, fenetre, canvas, proportion, plateau):
-        #On a un plateau sous les yeux : il faut trouver le meilleur coup possible
-        tousLesCoups = plateau.TousLesCoups(self.numero);
-
-        #On les notes tous et on joue le meilleur
-        indexsMeilleursCoups = [];
-        meilleurNote = -1000;
-        for i in range(len(tousLesCoups)):
-            note = IaLevel1.Evaluer(tousLesCoups[i].nouveauPlateau, self.numero);
-            if (note > meilleurNote):
-                meilleurNote = note;
-                indexsMeilleursCoups = [];
-                indexsMeilleursCoups.append(i);
-            elif (note == meilleurNote):
-                indexsMeilleursCoups.append(i);
-
-        #On tire au hasard un des coups parmis les meilleurs
-        if (len(indexsMeilleursCoups) == 1):
-            index = indexsMeilleursCoups[0];
-        else:
-            index = indexsMeilleursCoups[randint(0,len(indexsMeilleursCoups)-1)];
-
-        #On joue le coup
-        return tousLesCoups[index];
-
-
-    #Methode evaluant un plateau de jeu, lui donnant une note en fonction de la situation
-    def Evaluer(plateau, nbJoueur):
-
-        #On releve l'avantage en barriere
-        avantageBarriere = plateau.nbBarriere[0] - plateau.nbBarriere[1];
-
-        #On releve le nombre de case d'avance que l'on a:
-        distanceJ1 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(1), 0);
-        distanceJ2 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(2), 8);
-        avantageDistance = distanceJ2 - distanceJ1;
-
-        #On fait la somme pour avoir l'avantage
-        avantage = avantageBarriere + avantageDistance;
-
-        #On inverse si on veut l'avantage du joueur 2
-        if (nbJoueur == 2):
-            avantage = -1 * avantage;
-
-        return avantage;
-
-
-
-
-
-class IaLevel2:
-    """
-    Ia de niveau 2 : elle est capable de plus au moins anticiper la réaction de l'adversaire
-    Caractéristiques :
-    - Niveau moyen
-    - Temps de jeu moyen : dépend du coup : si le meilleur coup est un déplacement, environ 5s
-    Si le meilleur coup est une barrière il peut prendre longtemps
-    Temps maximum dans le pire des cas : 4 mins 42 secondes
-    """
-
-    #Constructeur
-    def __init__ (self, numero):
-        self.numero = numero;
-
-    #Methodes
-    #Fonction Jouer qui fait jouer l'IA
-    #Le fonctionnement de cette fonction est tres proche de celle pour IALevel1
-    #Sauf qu'au lieu d'évaluer les coups directement a partir de la fonction d'evaluation, on passe par la fonction Anticpation
-    def Jouer(self, fenetre, canvas, proportion, plateau):
-        #Pour jouer, nous allons dans un premier temps générer tous les coups que nous pouvons jouer
-        tousLesCoups = plateau.TousLesCoups(self.numero);
-
-        #On les notes tous et on joue le meilleur
-        indexsMeilleursCoups = [];
-        meilleurNote = -1000;
-        for i in range(len(tousLesCoups)):
-            note = IaLevel2.Anticipation(tousLesCoups[i].nouveauPlateau, self.numero);
-            print(str(i) + " done | note  : " + str(note));
-            if (note > meilleurNote):
-                meilleurNote = note;
-                indexsMeilleursCoups = [];
-                indexsMeilleursCoups.append(i);
-            elif (note == meilleurNote):
-                indexsMeilleursCoups.append(i);
-
-        #On tire au hasard un des coups parmis les meilleurs
-        if (len(indexsMeilleursCoups) == 1):
-            index = indexsMeilleursCoups[0];
-        else:
-            index = indexsMeilleursCoups[randint(0,len(indexsMeilleursCoups)-1)];
-
-        #On joue le coup
-        return tousLesCoups[index];
-
-    #Methode permettant d'anticiper les coups adverses pour un plateau donné
-    def Anticipation(plateau, numero):
-        #Pour anticiper le coup adverse, il nous faut deja tous les simulés pour ce coup ci
-        tousLesCoups = plateau.TousLesCoups(3-numero);
-
-        #A present, on va supposer que l'adversaire fasse toujours le meilleur coup possible
-        #On va donc chercher le meilleur coup parmis tous les coups simulés
-        pireNote = 1000;
-        for coup in tousLesCoups:
-            note = IaLevel2.Evaluer(coup.nouveauPlateau, numero);
-            if (note < pireNote):
-                pireNote = note;
-
-        #Evaluer nous renvoie donc le meilleur coup, non pas pour nous mais pour notre adversaire
-        #On va donc inverser la note en la multipliant par -1 et la renvoyer 
-        return pireNote;
-
-
-    #Methode evaluant un plateau de jeu, lui donnant une note en fonction de la situation
-    def Evaluer(plateau, nbJoueur):
-        temps = time.time();
-        #On releve l'avantage en barriere
-        avantageBarriere = plateau.nbBarriere[0] - plateau.nbBarriere[1];
-
-        #On releve le nombre de case d'avance que l'on a:
-        distanceJ1 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(1), 0);
-        distanceJ2 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(2), 8);
-        avantageDistance = distanceJ2 - distanceJ1;
-
-        #Si un des joueurs a gagner, on donne une tres grosse note
-        if (distanceJ1 == 0):
-            avantageDistance = 200;
-        if (distanceJ2 == 0):
-            avantageDistance = -200;
-
-        #Si un des joueurs s'approche de l'arrivée, on augmente l'importance de l'avantage distance
-        if (distanceJ1 == 1 or distanceJ2 == 1):
-            avantage = avantage*1.5;
-
-        #On fait la somme pour avoir l'avantage
-        avantage = avantageBarriere + avantageDistance;
-
-        #On inverse si on veut l'avantage du joueur 2
-        if (nbJoueur == 2):
-            avantage = -1 * avantage;
-        return avantage;
-
-
-class IaLevel2Rapide:
-    """
-    Amelioration de la classe IaLevel2 : Elle est beacoup plus rapide
-    """
-    #Constructeur
-    def __init__ (self, numero):
-        self.numero = numero;
-
-    #Methodes
-    #Fonction Jouer qui fait jouer l'IA
-    #Le fonctionnement de cette fonction est tres proche de celle pour IALevel1
-    #Sauf qu'au lieu d'évaluer les coups directement a partir de la fonction d'evaluation, on passe par la fonction Anticpation
-    def Jouer(self, fenetre, canvas, proportion, plateau):
-        #Pour jouer, nous allons dans un premier temps générer tous les coups que nous pouvons jouer
-        tousLesCoups = plateau.TousLesCoups(self.numero);
-
-        #On cherche le meilleur coup grace a l'algorithme NegaMax
-        indexMeilleurCoup = 0
-        meilleurCoup = -1000;
-        for i in range(len(tousLesCoups)):
-            note = IaLevel2Rapide.NegamaxAlpha(tousLesCoups[i].nouveauPlateau, self.numero, meilleurCoup);
-            if (tousLesCoups[i].nouveauPlateau.barrieresHorizontales[4][0] == 1):
-                print("Bite");
-            if (note > meilleurCoup):
-                meilleurCoup = note;
-                indexMeilleurCoup = i;
-        return tousLesCoups[indexMeilleurCoup];
-
-    #Methode Negamax Alpha 
-    #C'est une double amélioration de l'algorithme MinMax, qui permet de trouver le meilleur coup en anticipant les coups de l'adversaire
-    #Voir ici pour un bon pdf : http://pageperso.lif.univ-mrs.fr/~liva.ralaivola/teachings20062005/reversi/MinMaxL2.pdf
-    def NegamaxAlpha(plateau, joueur, alpha):
-        tousLesCoups = plateau.TousLesCoups(3-joueur);
-        pireNote = 1000;
-        for coup in tousLesCoups:
-            note = IaLevel2Rapide.Evaluer(coup.nouveauPlateau, joueur);
-            if (note < pireNote):
-                pireNote = note;
-            if (note <= alpha):
-                break;
-        return pireNote;
-
-
-    def Evaluer(plateau, nbJoueur):
-        temps = time.time();
-        #On releve l'avantage en barriere
-        avantageBarriere = plateau.nbBarriere[0] - plateau.nbBarriere[1];
-
-        #On releve le nombre de case d'avance que l'on a:
-        distanceJ1 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(1), 0);
-        distanceJ2 = plateau.BreadthFirstSearch(plateau.CoordonneeJoueur(2), 8);
-        avantageDistance = distanceJ2 - distanceJ1;
-
-        #Si un des joueurs a gagner, on donne une tres grosse note
-        if (distanceJ1 == 0):
-            avantageDistance += 200;
-        if (distanceJ2 == 0):
-            avantageDistance -= 200;
-
-        #Si un des joueurs s'approche de l'arrivée, on augmente l'importance de l'avantage distance
-        if (distanceJ1 == 1 or distanceJ2 == 1):
-            avantageDistance = avantageDistance*2;
-
-        #On fait la somme pour avoir l'avantage
-        avantage = avantageBarriere + avantageDistance;
-
-
-        #On inverse si on veut l'avantage du joueur 2
-        if (nbJoueur == 2):
-            avantage = -1 * avantage;
-        return avantage;
-
-
-
 class Joueur:
 
     """
@@ -775,6 +580,9 @@ class Game:
 
 
     #METHODES
+    #Methode pour détruire la partie
+    def destroy(self):
+       self.fenetre.destroy();
 
     #Methode qui vérifie si un joueur a gagné
     #Retourne 0 si personne n'a gagné, 1 si le J1 a gagné ou 2 si le j2 a gagné
@@ -1026,6 +834,7 @@ class Game:
 
         #On affiche
         print("Victoire du Joueur " + str(gagnant));
+        return gagnant;
 
 
 
@@ -1039,12 +848,63 @@ class Game:
 def main():
 
     #On lance le jeu
-    j1 = Joueur(1)
-    j2 = IaLevel1(2)
+    j1 = IaLevel1(1)
+    j2 = IaLevel1Evolutive(2, 1, 1, 10)
     game = Game(j1,j2,100)
     game.CommencerPartie()
+
+#Fonction pour entrainer le programme
+def StartTrain(j, a, b, c):
+    #On lance le jeu
+    if j == 2:
+        j1 = IaLevel1(1)
+        j2 = IaLevel1Evolutive(2, a, b, c)
+    else:
+        j1 = IaLevel1Evolutive(1, a, b, c)
+        j2 = IaLevel1(2)
+        
+    game = Game(j1,j2,100)
+    result = game.CommencerPartie();
+    game.destroy();
+    if (result == j):
+        return 1;
+    else:
+        return 0;
+
+
+#Fonction pour entrainer le programme
+def train():
+    print("Train start");
+
+    #On génère une population de 20 individus de manière aléatoires
+    listeDIndividus = [];
+    for i in range(30):
+        listeDIndividus.append((randint(1,20), randint(1,20), randint(0,200)));
+
+    tableauVictoire = [];
+    #On fait jouer ses matchs à chaque individus
+    for k in range(15):
+        victoire = 0;
+        for i in range(50):
+            if i > 9:
+                tour = 1;
+            else:
+                tour = 2;
+
+            print("\n\nDEBUT DU MATCH " + str(i+1) + " AVEC INDIVIDU N " + str(k+1) + " DE TYPE (" + str(listeDIndividus[k][0]) + ";" + str(listeDIndividus[k][1]) + ";" + str(listeDIndividus[k][2]) + ")");
+            victoire += StartTrain(tour, listeDIndividus[k][0], listeDIndividus[k][0], listeDIndividus[k][0]);
+        
+        #On note ses stats
+        tableauVictoire.append(victoire);
+
+    #On affiche le tableau :
+    for k in range (30):
+        print("Joueur " + str(k+1) + " : " + "(" + str(listeDIndividus[k][0]) + ";" + str(listeDIndividus[k][1]) + ";" + str(listeDIndividus[k][2]) + ") -> " + str(tableauVictoire[k]) + " victoire(s)");
+    print("Fin");
+
+
 
 
 #Definition de la fonction main
 if __name__ == "__main__":
-    main()
+    train()

@@ -5,14 +5,34 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Quoridor_POO", "Quoridor_POO\Quoridor_POO.pyproj", "{3F3858D9-3A1F-4357-85F4-0601227DC147}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuoridorModule", "QuoridorModule\QuoridorModule.vcxproj", "{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Release|x64.ActiveCfg = Release|Any CPU
+		{3F3858D9-3A1F-4357-85F4-0601227DC147}.Release|x86.ActiveCfg = Release|Any CPU
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Debug|x64.ActiveCfg = Debug|x64
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Debug|x64.Build.0 = Debug|x64
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Debug|x86.Build.0 = Debug|Win32
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Release|Any CPU.ActiveCfg = Release|Win32
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Release|x64.ActiveCfg = Release|x64
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Release|x64.Build.0 = Release|x64
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Release|x86.ActiveCfg = Release|Win32
+		{07C9EDB1-8685-46AC-93C2-E48AAD9931E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
